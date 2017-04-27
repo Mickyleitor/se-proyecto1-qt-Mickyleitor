@@ -1,6 +1,7 @@
 ﻿// Cabecera de la implementacion de protocolo de comunicaciones
 // El estudiante debera añadir nuevos comandos a la lista de comandos disponibles, asi como
 // crear las estructuras adecuadas para los parameros de los comandos.
+// Comentario de prueba
 
 #ifndef __PROTOCOL_H
 #define __PROTOCOL_H
