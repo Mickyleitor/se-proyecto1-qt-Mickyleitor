@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>289</height>
+    <width>640</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="runButton">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>10</y>
+     <x>262</x>
+     <y>56</y>
      <width>98</width>
      <height>27</height>
     </rect>
@@ -29,8 +29,8 @@
   <widget class="QPushButton" name="pingButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>50</y>
+     <x>282</x>
+     <y>96</y>
      <width>61</width>
      <height>27</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QSplitter" name="splitter">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>10</y>
+     <x>22</x>
+     <y>56</y>
      <width>221</width>
      <height>27</height>
     </rect>
@@ -61,8 +61,8 @@
   <widget class="QSplitter" name="splitter_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>80</y>
+     <x>32</x>
+     <y>126</y>
      <width>97</width>
      <height>66</height>
     </rect>
@@ -89,8 +89,8 @@
   <widget class="QwtKnob" name="Knob">
    <property name="geometry">
     <rect>
-     <x>118</x>
-     <y>44</y>
+     <x>120</x>
+     <y>90</y>
      <width>129</width>
      <height>134</height>
     </rect>
@@ -111,10 +111,10 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>256</y>
-     <width>64</width>
-     <height>27</height>
+     <x>13</x>
+     <y>306</y>
+     <width>71</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -124,8 +124,8 @@
   <widget class="QLabel" name="statusLabel">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>260</y>
+     <x>90</x>
+     <y>320</y>
      <width>331</width>
      <height>17</height>
     </rect>
@@ -137,10 +137,10 @@
   <widget class="color_widgets::ColorWheel" name="colorWheel">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>100</y>
-     <width>100</width>
-     <height>100</height>
+     <x>470</x>
+     <y>120</y>
+     <width>131</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="sizePolicy">
