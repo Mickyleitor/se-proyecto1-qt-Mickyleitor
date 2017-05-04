@@ -23,19 +23,27 @@ public:
 private slots:
     //void on_pingButton_clicked();
     void on_runButton_clicked();
+
     //void readRequest();
     void on_serialPortComboBox_currentIndexChanged(const QString &arg1);
 
-    void on_rojo_stateChanged(int arg1);
-    void on_verde_stateChanged(int arg1);
-    void on_azul_stateChanged(int arg1);
-    void on_pushButton_clicked();    
+    void on_rojo_clicked();
+    void on_verde_clicked();
+    void on_azul_clicked();
+    void on_ModeButton_clicked();
+    void on_pushButton_clicked();
+    void on_checkLEDs_clicked();
+    void on_colorWheel_colorChanged(const QColor &arg1);
+    void on_Interrupts_clicked(bool checked);
 
     void tivaStatusChanged(int status,QString message);
     void pingResponseReceived(void);
     void CommandRejected(int16_t code);
-
-    void on_colorWheel_colorChanged(const QColor &arg1);
+    void SwitchModeReceived(int modo);
+    void RequestReceived(uint8_t s1, uint8_t s2);
+    void IntensityReceived(float x);
+    void ColourReceived(int rojo,int azul,int verde);
+    void LedsReceived(uint8_t a,uint8_t b,uint8_t c);
 
 private: // funciones privadas
     void pingDevice();

@@ -44,6 +44,11 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(ui->Knob,SIGNAL(valueChanged(double)),&tiva,SLOT(LEDPwmBrightness(double)));
     connect(&tiva,SIGNAL(pingReceivedFromTiva()),this,SLOT(pingResponseReceived()));
     connect(&tiva,SIGNAL(commandRejectedFromTiva(int16_t)),this,SLOT(CommandRejected(int16_t)));
+    connect(&tiva,SIGNAL(commandSwitchMode(int8_t)),this,SLOT(SwitchModeReceived(int)));
+    connect(&tiva,SIGNAL(commandLEDs(uint8_t,uint8_t,uint8_t)),this,SLOT(LedsReceived(uint8_t,uint8_t,uint8_t)));
+    connect(&tiva,SIGNAL(RequestReceivedTIVA(uint8_t,uint8_t)),this,SLOT(RequestReceived(uint8_t,uint8_t)));
+    connect(&tiva,SIGNAL(IntensityWheel(float)),this,SLOT(IntensityReceived(float)));
+    connect(&tiva,SIGNAL(ColourWheel(int,int,int)),this,SLOT(ColourReceived(int,int,int)));
 }
 
 GUIPanel::~GUIPanel() // Destructor de la clase
@@ -116,21 +121,33 @@ void GUIPanel::on_runButton_clicked()
 }
 
 //Slot asociado al chechbox rojo (por nombre)
-void GUIPanel::on_rojo_stateChanged(int arg1)
+void GUIPanel::on_rojo_clicked()
 {
     cambiaLEDs();
 }
 
 //Slot asociado al chechbox verde (por nombre)
-void GUIPanel::on_verde_stateChanged(int arg1)
+void GUIPanel::on_verde_clicked()
 {
     cambiaLEDs();
 }
 
 //Slot asociado al chechbox azul (por nombre)
-void GUIPanel::on_azul_stateChanged(int arg1)
+void GUIPanel::on_azul_clicked()
 {
     cambiaLEDs();
+}
+
+void GUIPanel::on_ModeButton_clicked()
+{
+    tiva.SwitchMode(ui->ModeButton->isChecked());
+}
+
+void GUIPanel::SwitchModeReceived(int modo)
+{
+    bool m = true;
+    if(modo==1) m=false;
+    ui->ModeButton->setChecked(m);
 }
 
 void GUIPanel::cambiaLEDs(void)
@@ -170,5 +187,64 @@ void GUIPanel::CommandRejected(int16_t code)
 void GUIPanel::on_colorWheel_colorChanged(const QColor &arg1)
 {
     //Poner aqui el codigo para pedirle al objeto "tiva" (clase QRemoteTIVA) que envíe la orden de cambiar el Color hacia el microcontrolador
+    tiva.LEDColour(arg1.red(),arg1.green(),arg1.blue());
+}
 
+void GUIPanel::on_checkLEDs_clicked()
+{
+   tiva.RequestTiva();
+}
+
+void GUIPanel::RequestReceived(uint8_t s1, uint8_t s2)
+{
+// Cuando recibamos el aviso de que podemos tomar valores de los pulsadores, vemos que valores tienen y actuamos sobre los leds
+   //Según los valores que hayamos recibido encendemos o apagamos los leds de qt
+    bool pulsador1=false;
+    bool pulsador2=false;
+
+    if(s1>0) pulsador1=true;
+    else pulsador1=false;
+
+    if(s2>0) pulsador2=true;
+    else pulsador2=false;
+
+    ui->LEDsw1->setChecked(!pulsador1);
+    ui->LEDsw2->setChecked(!pulsador2);
+}
+
+void GUIPanel::IntensityReceived(float x)
+{
+   ui->Knob->setValue(x);
+}
+void GUIPanel::ColourReceived(int rojo,int verde,int azul)
+{
+    QColor aux;
+    aux.setRed(rojo >> 8);
+    aux.setGreen(verde >> 8);
+    aux.setBlue(azul >> 8);
+    ui->colorWheel->setColor(aux);
+}
+
+
+
+void GUIPanel::on_Interrupts_clicked(bool checked)
+{
+    tiva.SwitchInterrupts(checked);
+
+}
+
+void GUIPanel::LedsReceived(uint8_t a, uint8_t b, uint8_t c)
+{
+    bool rojo,verde,azul;
+
+    if(a>0) rojo=true;
+    else rojo=false;
+    if(b>0) verde=true;
+    else verde=false;
+    if(c>0) azul=true;
+    else azul=false;
+
+    ui->rojo->setChecked(rojo);
+    ui->verde->setChecked(verde);
+    ui->azul->setChecked(azul);
 }

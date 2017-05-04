@@ -76,7 +76,20 @@ void QRemoteTIVA::readRequest()
                     // Crea una ventana popup con el mensaje indicado
                     emit pingReceivedFromTiva();
                     break;
-
+                case COMANDO_MODO:
+                {
+                    PARAM_COMANDO_MODO parametro;
+                    if (check_and_extract_command_param(ptrtoparam, tam, sizeof(parametro),&parametro)>0)
+                    {
+                       // Muestra en una etiqueta (statuslabel) del GUI el mensaje
+                       emit commandSwitchMode(parametro.x);
+                    }
+                    else
+                    {
+                       emit commandRejectedFromTiva(-1);
+                    }
+                }
+                    break;
                 case COMANDO_RECHAZADO:
                 {
                     // En otros comandos hay que extraer los parametros de la trama y copiarlos
@@ -96,7 +109,22 @@ void QRemoteTIVA::readRequest()
 
                     //Falta por implementar la recepcion de mas tipos de comando
                     //habria que decodificarlos y emitir las señales correspondientes con los parametros que correspondan
-
+                case COMANDO_REQUEST:
+                    //Respuesta al comando de cambiar los colores de los Leds del QT
+                {
+                    // En otros comandos hay que extraer los parametros de la trama y copiarlos
+                    // a una estructura para poder procesar su informacion
+                    PARAM_COMANDO_REQUEST parametro;
+                    if (check_and_extract_command_param(ptrtoparam, tam, sizeof(parametro),&parametro)>0)
+                    {
+                       // Muestra en una etiqueta (statuslabel) del GUI el mensaje
+                       emit RequestReceivedTIVA(parametro.sw1, parametro.sw2);
+                    }
+                    else
+                    {
+                       emit commandRejectedFromTiva(-1);
+                    }
+                }
                 default:
                     //Este error lo notifico mediante la señal statusChanged
                     LastError=QString("Status: Recibido paquete inesperado");
@@ -247,6 +275,60 @@ void QRemoteTIVA::LEDPwmBrightness(double value)
         // de trama
         size=create_frame((uint8_t *)pui8Frame, COMANDO_BRILLO, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
         // Se se pudo crear correctamente, se envia la trama
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+
+void QRemoteTIVA::SwitchMode(bool y){
+    PARAM_COMANDO_MODO parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if (connected){
+        if (y) parametro.x = 1;
+        if (!y) parametro.x = 0;
+        //Creamos trama
+        size = create_frame((uint8_t *)pui8Frame,COMANDO_MODO,&parametro,sizeof(parametro),MAX_FRAME_SIZE);
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+
+void QRemoteTIVA::LEDColour(int rojo, int verde, int azul)
+{
+    PARAM_COMANDO_COLOR parametro1;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if (connected){
+        //Rellenamos la intensidad
+        parametro1.r=rojo;
+        parametro1.g=verde;
+        parametro1.b=azul;
+        //Creamos trama
+        size = create_frame((uint8_t *)pui8Frame,COMANDO_COLOR,&parametro1,sizeof(parametro1),MAX_FRAME_SIZE);
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+
+void QRemoteTIVA::RequestTiva()
+{
+    char packet[MAX_FRAME_SIZE];
+    int size;
+    PARAM_COMANDO_REQUEST parametro;
+    if (connected) //
+    {
+        size=create_frame((unsigned char *)packet, COMANDO_REQUEST, &(parametro), sizeof(parametro), MAX_FRAME_SIZE);
+        if (size>0) serial.write(packet,size);
+    }
+}
+
+void QRemoteTIVA::SwitchInterrupts(bool y){
+    PARAM_COMANDO_INTERRUPTS parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if (connected){
+        if (y) parametro.x = 1;
+        if (!y) parametro.x = 0;
+        //Creamos trama
+        size = create_frame((uint8_t *)pui8Frame,COMANDO_INTERRUPT,&parametro,sizeof(parametro),MAX_FRAME_SIZE);
         if (size>0) serial.write((char *)pui8Frame,size);
     }
 }

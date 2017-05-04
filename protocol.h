@@ -39,6 +39,10 @@ typedef enum {
     COMANDO_PING,
     COMANDO_LEDS,
     COMANDO_BRILLO,
+    COMANDO_MODO,
+    COMANDO_REQUEST,
+    COMANDO_COLOR,
+    COMANDO_INTERRUPT,
 
 } commandTypes;
 
@@ -80,6 +84,26 @@ typedef union{
 typedef struct {
     float rIntensity;
 } PACKED PARAM_COMANDO_BRILLO;
+
+typedef struct {
+    uint8_t x;
+} PACKED PARAM_COMANDO_MODO;
+
+typedef struct {
+    uint8_t sw1;
+    uint8_t sw2;
+} PACKED PARAM_COMANDO_REQUEST;
+
+typedef struct {
+    int r;
+    int g;
+    int b;
+} PACKED PARAM_COMANDO_COLOR;
+
+typedef struct {
+    uint8_t x;
+} PACKED PARAM_COMANDO_INTERRUPTS;
+
 
 #pragma pack()	//...Pero solo para los comandos que voy a intercambiar, no para el resto.
 
