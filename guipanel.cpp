@@ -94,6 +94,7 @@ void GUIPanel::tivaStatusChanged(int status,QString message)
 
             //    // Y se habilitan los controles deshabilitados
             ui->pingButton->setEnabled(true);
+            ui->pushButton->setText(tr("Borrar Msg"));
 
         break;
 
@@ -106,6 +107,7 @@ void GUIPanel::tivaStatusChanged(int status,QString message)
         case QRemoteTIVA::FragmentedPacketError:
             //Errores detectados en la recepcion de paquetes
             ui->statusLabel->setText(message);
+            ui->pushButton->setText(tr("Borrar Msg"));
         default:
             //Otros errores (por ejemplo, abriendo el puerto)
             processError(tiva.getLastErrorMessage());
@@ -160,6 +162,7 @@ void GUIPanel::cambiaLEDs(void)
 void GUIPanel::on_pushButton_clicked()
 {
     ui->statusLabel->setText(tr(""));
+    ui->pushButton->setText("Estado");
 }
 
 //**** Slots asociados a la recepción de mensajes desde la TIVA ********/
@@ -181,6 +184,7 @@ void GUIPanel::pingResponseReceived()
 void GUIPanel::CommandRejected(int16_t code)
 {
     ui->statusLabel->setText(tr("Status: Comando rechazado,%1").arg(code));
+    ui->pushButton->setText(tr("Borrar Msg"));
 }
 
 
@@ -247,3 +251,11 @@ void GUIPanel::LedsReceived(uint8_t a, uint8_t b, uint8_t c)
     ui->verde->setChecked(verde);
     ui->azul->setChecked(azul);
 }
+
+// Segunda parte
+
+void GUIPanel::on_SetTimerOn_clicked(bool checked)
+{
+    tiva.TurnOnTimer(checked);
+}
+

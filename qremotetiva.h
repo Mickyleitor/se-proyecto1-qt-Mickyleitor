@@ -56,6 +56,9 @@ public slots:
     void SwitchInterrupts(bool y);
     void RequestTiva();
 
+    // Segunda parte
+    void TurnOnTimer(bool estado);
+
 
 
 private slots:

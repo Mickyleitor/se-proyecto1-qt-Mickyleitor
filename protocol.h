@@ -43,6 +43,7 @@ typedef enum {
     COMANDO_REQUEST,
     COMANDO_COLOR,
     COMANDO_INTERRUPT,
+    COMANDO_TIMER,
 
 } commandTypes;
 
@@ -104,6 +105,11 @@ typedef struct {
     uint8_t x;
 } PACKED PARAM_COMANDO_INTERRUPTS;
 
+// Segunda parte
+typedef struct
+{
+    bool Timer_On;
+} PACKED PARAM_COMANDO_TIMER;
 
 #pragma pack()	//...Pero solo para los comandos que voy a intercambiar, no para el resto.
 

@@ -333,3 +333,17 @@ void QRemoteTIVA::SwitchInterrupts(bool y){
     }
 }
 
+// Segunda parte
+void QRemoteTIVA::TurnOnTimer(bool estado)
+{
+    PARAM_COMANDO_TIMER parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if(connected)
+    {
+        parametro.Timer_On=estado;
+        size=create_frame((uint8_t *)pui8Frame, COMANDO_TIMER, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+

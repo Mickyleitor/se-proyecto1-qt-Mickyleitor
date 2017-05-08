@@ -36,6 +36,9 @@ private slots:
     void on_colorWheel_colorChanged(const QColor &arg1);
     void on_Interrupts_clicked(bool checked);
 
+    // Segunda parte
+    void on_SetTimerOn_clicked(bool checked);
+
     void tivaStatusChanged(int status,QString message);
     void pingResponseReceived(void);
     void CommandRejected(int16_t code);
