@@ -7,7 +7,7 @@ El sistema implementado tendrá la función de un dispositivo de medida y contro
     <img src="https://i.gyazo.com/67de20daa1245bf042484976c04ad8b8.png" width="640">
 </p>
 
-### Especificaciones funcionales básicas
+### Especificaciones funcionales básicas P1
 Se exponen aqui las funcionalidades básicas del proyecto.
 #### Control PWM del led tricolor
 Desde la aplicación se debe poder controlar el ciclo de trabajo de las señales PWM conectadas a los pines PF1, PF2 y PF3 
@@ -17,12 +17,20 @@ Desde la aplicación se debe poder controlar el modo de los pines de salida que 
 #### Control de entradas digitales.
 La aplicación del PC debe poder consultar el valor que presentan las entradas digitales PF0 y PF4, que corresponden a los pulsadores SW1 y SW2 de la placa TIVA. Para ello se añadirá al interfaz gráfico QT, un botón que permita leer el estado de dichos pines (por sondeo) y mostrarlo en el interfaz de usuario (para mostrar el valor utilice un control de tipo LED (de la biblioteca analogwidgets) para cada pulsador.
 #### Envío asíncrono de eventos de los pulsadores.
-Desde el PC se debe poder activar o desactivar este comportamiento, que consiste en que el microcontrolador avise al PC cuando hay un cambio en el estado de los pulsadores SW1 o SW2 de la TIVA, sin que el PC tenga que consultarle. Al recibir los mensajes de notificación, el PC debe mostrar el valor de los pines en el interfaz de usuario. El envío de este evento se debe poder activar y desactivar desde el PC. 
+Desde el PC se debe poder activar o desactivar este comportamiento, que consiste en que el microcontrolador avise al PC cuando hay un cambio en el estado de los pulsadores SW1 o SW2 de la TIVA, sin que el PC tenga que consultarle. Al recibir los mensajes de notificación, el PC debe mostrar el valor de los pines en el interfaz de usuario. El envío de este evento se debe poder activar y desactivar desde el PC.
+
 #### Visualización en tiempo real de:
 1. Visualizar las tareas del sistema y su estado [Implementado en el ejemplo]
 2. Visualizar la memoria libre de FreeRTOS [Implementado en el ejemplo]
 3. Visualizar el uso de CPU [Implementado en el ejemplo]
 4. Visualizar las estadísticas de las tareas [Implementado en el ejemplo]
+
+### Especificaciones funcionales básicas P2
+#### Sistema de monitorización de entradas analógicas y digitales
+Cuando  la  funcionalidad  esté  activada,  el  firmware  de  la  TIVA  realizará  una  monitorización  de  los  pines GPIO del puerto B (“entradas digitales”) y de los pines analógicos AIN0, AIN1, AIN2 y AIN3 (multiplexados con los pines del puerto PE).
+
+#### Adquisición de datos analógicos (con DMA) y representación en tiempo real (“Tarjeta	de	adquisición	de	datos”)
+El  PC  debe  poder  configurar  el  muestreo  y  conversión  A/D  de  señales  analógicas  con  una  frecuencia  de muestreo programable. Los datos de ésta operación se deberán transmitir en tiempo real al PC, que en tal caso  los  mostrará  en  una  gráfica.  También  debe  ser  posible  detener  la  adquisición  de  datos.  Se  muestrearán los canales AIN0, AIN1, AIN2 y AIN3, multiplexados con los pines del puerto PE.
 
 ### Protocolo de comunicación
 Para las comunicaciones entre la aplicación del PC y la del microcontrolador se utilizará el perfil CDC (Communication Device Class) del interfaz USB, que emula un puerto serie.
@@ -45,3 +53,6 @@ El microcontrolador puede también enviar mensajes de respuesta hacia el PC.
 <p align="center">
     <img src="https://i.gyazo.com/d7611bdf3e145ec295af5c7d53cf25d8.png" width="640">
 </p>
+
+#### Lista de comandos AVANZADOS
+ToDo!!
