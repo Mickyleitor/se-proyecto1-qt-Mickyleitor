@@ -32,7 +32,7 @@ private slots:
     void on_azul_clicked();
     void on_ModeButton_clicked();
     void on_pushButton_clicked();
-    void on_checkLEDs_clicked();
+    void on_checkSWs_clicked();
     void on_colorWheel_colorChanged(const QColor &arg1);
     void on_Interrupts_clicked(bool checked);
 

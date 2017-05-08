@@ -40,7 +40,8 @@ signals:
     void statusChanged(int status, QString message); //Esta señal se genera al realizar la conexión/desconexion o cuando se produce un error de comunicacion
     void pingReceivedFromTiva(void); //Esta señal se genera al recibir una respuesta de PING de la TIVA
     void commandRejectedFromTiva(int16_t code); //Esta señal se genera al recibir una respuesta de Comando Rechazado desde la TIVA
-    void commandSwitchMode(int8_t x); // Esta señal es el comando realizado con el cambio de modo GPIO / PWM
+    void commandSwitchMode(int x); // Esta señal es el comando realizado con el cambio de modo GPIO / PWM
+    void commandLEDs(uint8_t x,uint8_t y ,uint8_t z);
     void RequestReceivedTIVA(uint8_t x,uint8_t y);
     void IntensityWheel(float intensity);
     void ColourWheel(int rojo,int verde,int azul);

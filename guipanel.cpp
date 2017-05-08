@@ -44,7 +44,7 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(ui->Knob,SIGNAL(valueChanged(double)),&tiva,SLOT(LEDPwmBrightness(double)));
     connect(&tiva,SIGNAL(pingReceivedFromTiva()),this,SLOT(pingResponseReceived()));
     connect(&tiva,SIGNAL(commandRejectedFromTiva(int16_t)),this,SLOT(CommandRejected(int16_t)));
-    connect(&tiva,SIGNAL(commandSwitchMode(int8_t)),this,SLOT(SwitchModeReceived(int)));
+    connect(&tiva,SIGNAL(commandSwitchMode(int)),this,SLOT(SwitchModeReceived(int)));
     connect(&tiva,SIGNAL(commandLEDs(uint8_t,uint8_t,uint8_t)),this,SLOT(LedsReceived(uint8_t,uint8_t,uint8_t)));
     connect(&tiva,SIGNAL(RequestReceivedTIVA(uint8_t,uint8_t)),this,SLOT(RequestReceived(uint8_t,uint8_t)));
     connect(&tiva,SIGNAL(IntensityWheel(float)),this,SLOT(IntensityReceived(float)));
@@ -190,7 +190,7 @@ void GUIPanel::on_colorWheel_colorChanged(const QColor &arg1)
     tiva.LEDColour(arg1.red(),arg1.green(),arg1.blue());
 }
 
-void GUIPanel::on_checkLEDs_clicked()
+void GUIPanel::on_checkSWs_clicked()
 {
    tiva.RequestTiva();
 }
@@ -230,7 +230,6 @@ void GUIPanel::ColourReceived(int rojo,int verde,int azul)
 void GUIPanel::on_Interrupts_clicked(bool checked)
 {
     tiva.SwitchInterrupts(checked);
-
 }
 
 void GUIPanel::LedsReceived(uint8_t a, uint8_t b, uint8_t c)
