@@ -177,7 +177,7 @@ uint8_t decode_command_type(uint8_t * buffer)
 //Devuelve: Tamaño del parametro recibido o un valor negativo si hay error
 int32_t check_and_extract_command_param(void *ptrtoparam, int32_t param_size, uint32_t payload,void *param)
 {
-    if (payload==param_size)
+    if (payload==(uint32_t)param_size)
     {
         memcpy(param,ptrtoparam,payload);
         return payload;

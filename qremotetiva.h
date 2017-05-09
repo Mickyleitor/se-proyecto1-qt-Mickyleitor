@@ -9,8 +9,9 @@
 #include<stdint.h>      // Cabecera para usar tipos de enteros con tamaño
 #include<stdbool.h>     // Cabecera para usar booleanos
 
-
-
+extern "C" {
+#include <protocol.h>
+}
 
 class QRemoteTIVA : public QObject
 {
@@ -29,7 +30,8 @@ public:
                      StopError,
                      FlowControlError,
                      UnexpectedPacketError,
-                     FragmentedPacketError
+                     FragmentedPacketError,
+                     ReceivedDataError
                     };
     Q_ENUM(TivaStatus)
 
@@ -46,6 +48,9 @@ signals:
     void IntensityWheel(float intensity);
     void ColourWheel(int rojo,int verde,int azul);
 
+    // Semana 2
+    void commandADCReceived(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint16_t chan4);
+    void commandADCReceived(PARAM_COMANDO_ADC x);
 public slots:
     void startSlave(QString puerto); //Este Slot arranca la comunicacion
     void pingTiva(void); //Este Slot provoca el envio del comando PING
@@ -58,6 +63,9 @@ public slots:
 
     // Segunda parte
     void TurnOnTimer(bool estado);
+    // Este Slot permite ordenar al objeto TIVA que envie un comando de conversion
+    void ADCSample(void);
+    void ChangeFrecuency(double value);  //Varia frecuencia
 
 
 

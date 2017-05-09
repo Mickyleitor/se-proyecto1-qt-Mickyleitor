@@ -38,6 +38,42 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
 
     ui->pingButton->setEnabled(false);    // Se deshabilita el botón de ping del interfaz gráfico, hasta que
 
+    //Semana 2. Inicializacion GRAFICA
+    ui->Grafica->setTitle("Sinusoides"); // Titulo de la grafica
+    ui->Grafica->setAxisTitle(QwtPlot::xBottom, "Tiempo"); // Etiqueta eje X de coordenadas
+    ui->Grafica->setAxisTitle(QwtPlot::yLeft, "Valor");    // Etiqueta eje Y de coordenadas
+    //ui->Grafica->axisAutoScale(true); // Con Autoescala
+    ui->Grafica->setAxisScale(QwtPlot::yLeft, 0, 3.3); // Escala fija
+    ui->Grafica->setAxisScale(QwtPlot::xBottom,0,1024.0);
+
+    // Formateo de la curva
+    for(int i=0;i<4;i++){
+    Channels[i] = new QwtPlotCurve();
+    Channels[i]->attach(ui->Grafica);
+    }
+
+    //Inicializacion de los valores básicos
+    for(int i=0;i<1024;i++){
+            xVal[i]=i;
+            yVal[0][i]=3.3*(sin((double)i*2.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[1][i]=3.3*(sin((double)i*4.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[2][i]=3.3*(sin((double)i*8.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[3][i]=3.3*(sin((double)i*16.0*3.14159/1024.0)+1.0)/2.0;
+    }
+    Channels[0]->setRawSamples(xVal,yVal[0],1024);
+    Channels[1]->setRawSamples(xVal,yVal[1],1024);
+    Channels[2]->setRawSamples(xVal,yVal[2],1024);
+    Channels[3]->setRawSamples(xVal,yVal[3],1024);
+
+    Channels[0]->setPen(QPen(Qt::red)); // Color de la curva
+    Channels[1]->setPen(QPen(Qt::cyan));
+    Channels[2]->setPen(QPen(Qt::yellow));
+    Channels[3]->setPen(QPen(Qt::green));
+    m_Grid = new QwtPlotGrid();     // Rejilla de puntos
+    m_Grid->attach(ui->Grafica);    // que se asocia al objeto QwtPl
+    ui->Grafica->setAutoReplot(false); //Desactiva el autoreplot (mejora la eficiencia)
+    //Semana 2. FIN Inicializacion GRAFICA
+
     //Conectamos Slots del objeto "Tiva" con Slots de nuestra aplicacion (o con widgets)
     connect(&tiva,SIGNAL(statusChanged(int,QString)),this,SLOT(tivaStatusChanged(int,QString)));
     connect(ui->pingButton,SIGNAL(clicked(bool)),&tiva,SLOT(pingTiva()));
@@ -49,6 +85,11 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(&tiva,SIGNAL(RequestReceivedTIVA(uint8_t,uint8_t)),this,SLOT(RequestReceived(uint8_t,uint8_t)));
     connect(&tiva,SIGNAL(IntensityWheel(float)),this,SLOT(IntensityReceived(float)));
     connect(&tiva,SIGNAL(ColourWheel(int,int,int)),this,SLOT(ColourReceived(int,int,int)));
+
+    //SEMANA2
+    connect(&tiva,SIGNAL(commandADCReceived(PARAM_COMANDO_ADC)),this,SLOT(procesaDatoADC(PARAM_COMANDO_ADC)));
+    connect(ui->ADCButton,SIGNAL(clicked(bool)),&tiva,SLOT(ADCSample()));
+
 }
 
 GUIPanel::~GUIPanel() // Destructor de la clase
@@ -58,6 +99,7 @@ GUIPanel::~GUIPanel() // Destructor de la clase
 
 void GUIPanel::on_serialPortComboBox_currentIndexChanged(const QString &arg1)
 {
+    QString arreglobasura = arg1; // Pequeño arreglo para quitar advertencias de que no se usa arg1 (No me gustan las advertencias)
     activateRunButton();
 }
 
@@ -94,7 +136,7 @@ void GUIPanel::tivaStatusChanged(int status,QString message)
 
             //    // Y se habilitan los controles deshabilitados
             ui->pingButton->setEnabled(true);
-            ui->pushButton->setText(tr("Borrar Msg"));
+            ui->pushButton->setText(tr("Borrar Mensaje"));
 
         break;
 
@@ -107,7 +149,7 @@ void GUIPanel::tivaStatusChanged(int status,QString message)
         case QRemoteTIVA::FragmentedPacketError:
             //Errores detectados en la recepcion de paquetes
             ui->statusLabel->setText(message);
-            ui->pushButton->setText(tr("Borrar Msg"));
+            ui->pushButton->setText(tr("Borrar Mensaje"));
         default:
             //Otros errores (por ejemplo, abriendo el puerto)
             processError(tiva.getLastErrorMessage());
@@ -184,7 +226,7 @@ void GUIPanel::pingResponseReceived()
 void GUIPanel::CommandRejected(int16_t code)
 {
     ui->statusLabel->setText(tr("Status: Comando rechazado,%1").arg(code));
-    ui->pushButton->setText(tr("Borrar Msg"));
+    ui->pushButton->setText(tr("Borrar Mensaje"));
 }
 
 
@@ -259,3 +301,42 @@ void GUIPanel::on_SetTimerOn_clicked(bool checked)
     tiva.TurnOnTimer(checked);
 }
 
+// Slot que asociaremos a una señal que genera el objeto TIVA cuando recibe datos del ADC
+void GUIPanel::procesaDatoADC(PARAM_COMANDO_ADC x)
+{
+    //Manda cada dato a su correspondiente display (pasandolos a voltios)
+    static int  j=0;
+    int i;
+    ui->lcdCh1->display(((double)x.channels[7].chan1)*3.3/4096.0);
+    ui->lcdCh2->display(((double)x.channels[7].chan2)*3.3/4096.0);
+    ui->lcdCh3->display(((double)x.channels[7].chan3)*3.3/4096.0);
+    ui->lcdCh4->display(((double)x.channels[7].chan4)*3.3/4096.0);
+
+    //Inicializacion de los valores básicos
+    for(i=0;i<8;i++){
+        yVal[0][i+j]=((double)x.channels[i].chan1)*3.3/4096.0;
+        yVal[1][i+j]=((double)x.channels[i].chan2)*3.3/4096.0;
+        yVal[2][i+j]=((double)x.channels[i].chan3)*3.3/4096.0;
+        yVal[3][i+j]=((double)x.channels[i].chan4)*3.3/4096.0;
+        xVal[i+j]=i+j;
+   }
+
+    j=j+8;
+    Channels[0]->setRawSamples(xVal,yVal[0],1024);
+    Channels[1]->setRawSamples(xVal,yVal[1],1024);
+    Channels[2]->setRawSamples(xVal,yVal[2],1024);
+    Channels[3]->setRawSamples(xVal,yVal[3],1024);
+    if (j>=1024) j=0;
+
+
+    ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
+
+}
+
+//SEMANA2: Slot asociado a la rosca "frecuencia"
+void GUIPanel::on_frecuencia_valueChanged(double value)
+{
+    //COMANDO_FREQ parametro;
+    tiva.ChangeFrecuency(value);
+
+}

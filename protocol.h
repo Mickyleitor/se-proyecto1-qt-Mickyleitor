@@ -29,6 +29,14 @@
 #define MAX_DATA_SIZE (32)
 #define MAX_FRAME_SIZE (2*(MAX_DATA_SIZE))
 
+//ESTRUCTURA MUESTRAS SEMANA 2
+typedef struct
+{
+    uint16_t chan1;
+    uint16_t chan2;
+    uint16_t chan3;
+    uint16_t chan4;
+} MuestrasADC;
 
 //Códigos de los comandos
 
@@ -44,6 +52,8 @@ typedef enum {
     COMANDO_COLOR,
     COMANDO_INTERRUPT,
     COMANDO_TIMER,
+    COMANDO_ADC,
+    COMANDO_FREQ
 
 } commandTypes;
 
@@ -110,6 +120,16 @@ typedef struct
 {
     bool Timer_On;
 } PACKED PARAM_COMANDO_TIMER;
+
+typedef struct
+{
+    MuestrasADC channels[10];
+} PACKED PARAM_COMANDO_ADC; //SEMANA2
+
+typedef struct
+{
+    double frequency;
+} PACKED PARAM_COMANDO_FREQ; //SEMANA2
 
 #pragma pack()	//...Pero solo para los comandos que voy a intercambiar, no para el resto.
 

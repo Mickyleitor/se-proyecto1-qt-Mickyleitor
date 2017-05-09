@@ -106,11 +106,7 @@ void QRemoteTIVA::readRequest()
                     }
                 }
                     break;
-
-                    //Falta por implementar la recepcion de mas tipos de comando
-                    //habria que decodificarlos y emitir las señales correspondientes con los parametros que correspondan
                 case COMANDO_REQUEST:
-                    //Respuesta al comando de cambiar los colores de los Leds del QT
                 {
                     // En otros comandos hay que extraer los parametros de la trama y copiarlos
                     // a una estructura para poder procesar su informacion
@@ -124,7 +120,25 @@ void QRemoteTIVA::readRequest()
                     {
                        emit commandRejectedFromTiva(-1);
                     }
+
                 }
+                    break;
+                case COMANDO_ADC:
+                {    //SEMANA2: Este caso trata la recepcion de datos del ADC desde la TIVA
+                    PARAM_COMANDO_ADC parametro;
+                    if (check_and_extract_command_param(ptrtoparam, tam, sizeof(parametro),&parametro)>0)
+                    {
+                        emit commandADCReceived(parametro);
+                    }
+                    else
+                    {   //Si el tamanho de los datos no es correcto emito la senhal statusChanged(...) para reportar un error
+                        LastError=QString("Status: Recibidos datos incorrectos");
+                        emit statusChanged(QRemoteTIVA::ReceivedDataError,LastError);
+
+                    }
+
+                }
+                break;
                 default:
                     //Este error lo notifico mediante la señal statusChanged
                     LastError=QString("Status: Recibido paquete inesperado");
@@ -346,4 +360,37 @@ void QRemoteTIVA::TurnOnTimer(bool estado)
         if (size>0) serial.write((char *)pui8Frame,size);
     }
 }
+
+// Este Slot permite ordenar al objeto TIVA que envie un comando de conversion
+void QRemoteTIVA::ADCSample(void)
+{
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if(connected)
+    {
+        size=create_frame((uint8_t *)pui8Frame, COMANDO_ADC, NULL, 0, MAX_FRAME_SIZE);
+        // Se se pudo crear correctamente, se envia la trama
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+
+void QRemoteTIVA::ChangeFrecuency(double value)
+{
+    PARAM_COMANDO_FREQ parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if(connected)
+    {
+        // Se rellenan los parametros del paquete (en este caso, el brillo)
+        parametro.frequency=value;
+        // Se crea la trama con n de secuencia 0; comando COMANDO_LEDS; se le pasa la
+        // estructura de parametros, indicando su tamaño; el nº final es el tamaño maximo
+        // de trama
+        size=create_frame((uint8_t *)pui8Frame, COMANDO_FREQ, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
+        // Se se pudo crear correctamente, se envia la trama
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+
+
 

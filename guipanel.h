@@ -4,11 +4,16 @@
 #include <QWidget>
 #include <QtSerialPort/qserialport.h>
 #include "qremotetiva.h"
+#include <qwt_plot_curve.h>
+#include <qwt_plot_grid.h>
 
 namespace Ui {
 class GUIPanel;
 }
-
+extern "C" {
+#include "protocol.h"    // Cabecera de funciones de gestión de tramas; se indica que está en C, ya que QTs
+// se integra en C++, y el C puede dar problemas si no se indica.
+}
 //QT4:QT_USE_NAMESPACE_SERIALPORT
 
 class GUIPanel : public QWidget
@@ -36,9 +41,6 @@ private slots:
     void on_colorWheel_colorChanged(const QColor &arg1);
     void on_Interrupts_clicked(bool checked);
 
-    // Segunda parte
-    void on_SetTimerOn_clicked(bool checked);
-
     void tivaStatusChanged(int status,QString message);
     void pingResponseReceived(void);
     void CommandRejected(int16_t code);
@@ -47,6 +49,13 @@ private slots:
     void IntensityReceived(float x);
     void ColourReceived(int rojo,int azul,int verde);
     void LedsReceived(uint8_t a,uint8_t b,uint8_t c);
+
+    // Segunda parte
+    void on_SetTimerOn_clicked(bool checked);
+    void procesaDatoADC(PARAM_COMANDO_ADC x);
+    void on_frecuencia_valueChanged(double value);
+
+
 
 private: // funciones privadas
     void pingDevice();
@@ -59,6 +68,11 @@ private:
     int transactionCount;    
     QRemoteTIVA tiva;
 
+    //SEMANA2: Para las graficas
+    double xVal[1024]; //valores eje X
+    double yVal[4][1024]; //valores ejes Y
+    QwtPlotCurve *Channels[4]; //Curvas
+    QwtPlotGrid  *m_Grid; //Cuadricula
 };
 
 #endif // GUIPANEL_H
