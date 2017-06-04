@@ -90,6 +90,13 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(&tiva,SIGNAL(commandADCReceived(uint16_t,uint16_t,uint16_t,uint16_t)),this,SLOT(procesaDatoADC(uint16_t,uint16_t,uint16_t,uint16_t)));
     connect(ui->ADCButton,SIGNAL(clicked(bool)),&tiva,SLOT(ADCSample()));
 
+    //CAMBIO!!!: Inicializa la ventana
+    ventanaPopUp.setIcon(QMessageBox::Information);
+    ventanaPopUp.setText(tr("Status: RESPUESTA A PING RECIBIDA"));
+    ventanaPopUp.setStandardButtons(QMessageBox::Ok);
+    ventanaPopUp.setWindowTitle(tr("Evento"));
+    ventanaPopUp.setParent(this,Qt::Popup);
+
 }
 
 GUIPanel::~GUIPanel() // Destructor de la clase
@@ -214,11 +221,11 @@ void GUIPanel::on_pushButton_clicked()
 //Este se ejecuta cuando se recibe una respuesta de PING
 void GUIPanel::pingResponseReceived()
 {
-
+    //CAMBIO: La ventana PoP Up ahora esta declarada como componente de la clase GUIPANEL. Se configura en el constructor
     // Ventana popUP para el caso de comando PING; no te deja definirla en un "caso"
-    QMessageBox ventanaPopUp(QMessageBox::Information,tr("Evento"),tr("Status: RESPUESTA A PING RECIBIDA"),QMessageBox::Ok,this,Qt::Popup);
     ventanaPopUp.setStyleSheet("background-color: lightgrey");
-    ventanaPopUp.exec();
+    ventanaPopUp.setModal(true); //CAMBIO: Se sustituye la llamada a exec(...) por estas dos.
+    ventanaPopUp.show();
 }
 
 
@@ -303,11 +310,34 @@ void GUIPanel::procesaDatoADC(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint1
     ui->lcdCh2->display(((double)chan2)*3.3/4096.0);
     ui->lcdCh3->display(((double)chan3)*3.3/4096.0);
     ui->lcdCh4->display(((double)chan4)*3.3/4096.0);
+
+    int i;
+    static int  j=0;
+    //Inicializacion de los valores básicos
+    for(i=0;i<8;i++){
+        yVal[0][i+j]=((double)chan1)*3.3/4096.0;
+        yVal[1][i+j]=((double)chan2)*3.3/4096.0;
+        yVal[2][i+j]=((double)chan3)*3.3/4096.0;
+        yVal[3][i+j]=((double)chan4)*3.3/4096.0;
+        xVal[i+j]=i+j;
+   }
+
+    j=j+8;
+    Channels[0]->setRawSamples(xVal,yVal[0],1024);
+    Channels[1]->setRawSamples(xVal,yVal[1],1024);
+    Channels[2]->setRawSamples(xVal,yVal[2],1024);
+    Channels[3]->setRawSamples(xVal,yVal[3],1024);
+    if (j>=1024) j=0;
+
+
+    ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
 }
 
 //SEMANA2: Slot asociado a la rosca "frecuencia"
 void GUIPanel::on_frecuencia_valueChanged(double value)
 {
+    tiva.ChangeFrequency(value);
+
     //Recalcula los valores de la grafica
     for(int i=0;i<1024;i++){
             //xVal[i]=i;
@@ -318,4 +348,9 @@ void GUIPanel::on_frecuencia_valueChanged(double value)
             yVal[3][i]=3.3*(sin((double)i*16.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
     }
     ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
+}
+
+void GUIPanel::on_TimerADC_clicked(bool checked)
+{
+    tiva.SetTimerADC(checked);
 }

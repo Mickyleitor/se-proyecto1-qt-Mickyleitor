@@ -338,6 +338,19 @@
       <double>0.000000000000000</double>
      </property>
     </widget>
+    <widget class="QCheckBox" name="TimerADC">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>120</y>
+       <width>161</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Habilitar Timer ADC</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="GUIGrafica">
     <attribute name="title">
@@ -384,9 +397,6 @@
       <bool>true</bool>
      </property>
     </widget>
-    <zorder>frecuencia</zorder>
-    <zorder>Grafica</zorder>
-    <zorder>Grafica</zorder>
    </widget>
   </widget>
   <widget class="QLabel" name="statusLabel">

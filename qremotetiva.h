@@ -63,6 +63,8 @@ public slots:
     // Segunda parte
     // Este Slot permite ordenar al objeto TIVA que envie un comando de conversion
     void ADCSample(void);
+    void SetTimerADC(bool estado);
+    void ChangeFrequency(double value);
 private slots:
     void readRequest(); //Este Slot se conecta a la señal readyRead(..) del puerto serie. Se encarga de procesar y decodificar los mensajes que llegan de la TIVA y
                         //generar señales para algunos de ellos.

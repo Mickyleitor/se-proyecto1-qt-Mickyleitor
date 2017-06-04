@@ -360,3 +360,29 @@ void QRemoteTIVA::ADCSample(void)
         if (size>0) serial.write((char *)pui8Frame,size);
     }
 }
+
+void QRemoteTIVA::SetTimerADC(bool estado)
+{
+    PARAM_COMANDO_TIMER parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if(connected)
+    {
+        parametro.Timer_On=estado;
+        size=create_frame((uint8_t *)pui8Frame, COMANDO_TIMER, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
+
+void QRemoteTIVA::ChangeFrequency(double value)
+{
+    PARAM_COMANDO_FREQ parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if(connected)
+    {
+        parametro.frequency=value;
+        size=create_frame((uint8_t *)pui8Frame, COMANDO_FREQ, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}

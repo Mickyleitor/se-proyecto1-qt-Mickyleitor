@@ -6,6 +6,7 @@
 #include "qremotetiva.h"
 #include <qwt_plot_curve.h>
 #include <qwt_plot_grid.h>
+#include <QMessageBox>
 
 namespace Ui {
 class GUIPanel;
@@ -52,7 +53,7 @@ private slots:
 
     // Segunda parte
     void procesaDatoADC(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint16_t chan4);
-
+    void on_TimerADC_clicked(bool checked);
     void on_frecuencia_valueChanged(double value);
 
 
@@ -66,6 +67,7 @@ private:
     Ui::GUIPanel *ui;
     int transactionCount;    
     QRemoteTIVA tiva;
+    QMessageBox ventanaPopUp;
 
     //SEMANA2: Para las graficas
     double xVal[1024]; //valores eje X
