@@ -50,7 +50,6 @@ signals:
 
     // Semana 2
     void commandADCReceived(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint16_t chan4);
-    void commandADCReceived(PARAM_COMANDO_ADC x);
 public slots:
     void startSlave(QString puerto); //Este Slot arranca la comunicacion
     void pingTiva(void); //Este Slot provoca el envio del comando PING
@@ -62,13 +61,8 @@ public slots:
     void RequestTiva();
 
     // Segunda parte
-    void TurnOnTimer(bool estado);
     // Este Slot permite ordenar al objeto TIVA que envie un comando de conversion
     void ADCSample(void);
-    void ChangeFrecuency(double value);  //Varia frecuencia
-
-
-
 private slots:
     void readRequest(); //Este Slot se conecta a la señal readyRead(..) del puerto serie. Se encarga de procesar y decodificar los mensajes que llegan de la TIVA y
                         //generar señales para algunos de ellos.

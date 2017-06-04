@@ -51,10 +51,9 @@ private slots:
     void LedsReceived(uint8_t a,uint8_t b,uint8_t c);
 
     // Segunda parte
-    void on_SetTimerOn_clicked(bool checked);
-    void procesaDatoADC(PARAM_COMANDO_ADC x);
-    void on_frecuencia_valueChanged(double value);
+    void procesaDatoADC(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint16_t chan4);
 
+    void on_frecuencia_valueChanged(double value);
 
 
 private: // funciones privadas

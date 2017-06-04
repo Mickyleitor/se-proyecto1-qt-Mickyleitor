@@ -42,6 +42,21 @@ typedef struct
 
 // El estudiante debe añadir aqui cada nuevo comando que implemente. IMPORTANTE el orden de los comandos
 // debe SER EL MISMO aqui, y en el codigo equivalente en la parte del microcontrolador (Code Composer)
+/*
+typedef enum {
+    COMANDO_RECHAZADO,
+    COMANDO_PING,
+    COMANDO_LEDS,
+    COMANDO_BRILLO,
+    COMANDO_COLOR,
+    COMANDO_MODO,
+    COMANDO_REQUEST,
+    COMANDO_INTERRUPT,
+    COMANDO_ADC,
+    COMANDO_FREQ,
+    COMANDO_TIMER
+} commandTypes;
+*/
 typedef enum {
     COMANDO_RECHAZADO,
     COMANDO_PING,
@@ -51,10 +66,11 @@ typedef enum {
     COMANDO_REQUEST,
     COMANDO_COLOR,
     COMANDO_INTERRUPT,
-    COMANDO_TIMER,
-    COMANDO_ADC,
-    COMANDO_FREQ
 
+    // Semana 2
+    COMANDO_ADC,
+    COMANDO_FREQ,
+    COMANDO_TIMER
 } commandTypes;
 
 //Codigos de Error de protocolo
@@ -123,7 +139,10 @@ typedef struct
 
 typedef struct
 {
-    MuestrasADC channels[10];
+    uint16_t chan1;
+    uint16_t chan2;
+    uint16_t chan3;
+    uint16_t chan4;
 } PACKED PARAM_COMANDO_ADC; //SEMANA2
 
 typedef struct

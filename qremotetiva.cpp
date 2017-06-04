@@ -128,7 +128,8 @@ void QRemoteTIVA::readRequest()
                     PARAM_COMANDO_ADC parametro;
                     if (check_and_extract_command_param(ptrtoparam, tam, sizeof(parametro),&parametro)>0)
                     {
-                        emit commandADCReceived(parametro);
+                        // Muestra en una etiqueta (statuslabel) del GUI el mensaje
+                        emit commandADCReceived(parametro.chan1,parametro.chan2,parametro.chan3,parametro.chan4);
                     }
                     else
                     {   //Si el tamanho de los datos no es correcto emito la senhal statusChanged(...) para reportar un error
@@ -347,21 +348,7 @@ void QRemoteTIVA::SwitchInterrupts(bool y){
     }
 }
 
-// Segunda parte
-void QRemoteTIVA::TurnOnTimer(bool estado)
-{
-    PARAM_COMANDO_TIMER parametro;
-    uint8_t pui8Frame[MAX_FRAME_SIZE];
-    int size;
-    if(connected)
-    {
-        parametro.Timer_On=estado;
-        size=create_frame((uint8_t *)pui8Frame, COMANDO_TIMER, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
-        if (size>0) serial.write((char *)pui8Frame,size);
-    }
-}
-
-// Este Slot permite ordenar al objeto TIVA que envie un comando de conversion
+//SEMANA2: Este Slot permite ordenar al objeto TIVA que envie un comando de conversion
 void QRemoteTIVA::ADCSample(void)
 {
     uint8_t pui8Frame[MAX_FRAME_SIZE];
@@ -373,24 +360,3 @@ void QRemoteTIVA::ADCSample(void)
         if (size>0) serial.write((char *)pui8Frame,size);
     }
 }
-
-void QRemoteTIVA::ChangeFrecuency(double value)
-{
-    PARAM_COMANDO_FREQ parametro;
-    uint8_t pui8Frame[MAX_FRAME_SIZE];
-    int size;
-    if(connected)
-    {
-        // Se rellenan los parametros del paquete (en este caso, el brillo)
-        parametro.frequency=value;
-        // Se crea la trama con n de secuencia 0; comando COMANDO_LEDS; se le pasa la
-        // estructura de parametros, indicando su tamaño; el nº final es el tamaño maximo
-        // de trama
-        size=create_frame((uint8_t *)pui8Frame, COMANDO_FREQ, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
-        // Se se pudo crear correctamente, se envia la trama
-        if (size>0) serial.write((char *)pui8Frame,size);
-    }
-}
-
-
-

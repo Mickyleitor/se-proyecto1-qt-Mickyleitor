@@ -86,8 +86,8 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(&tiva,SIGNAL(IntensityWheel(float)),this,SLOT(IntensityReceived(float)));
     connect(&tiva,SIGNAL(ColourWheel(int,int,int)),this,SLOT(ColourReceived(int,int,int)));
 
-    //SEMANA2
-    connect(&tiva,SIGNAL(commandADCReceived(PARAM_COMANDO_ADC)),this,SLOT(procesaDatoADC(PARAM_COMANDO_ADC)));
+    //SEMANA2: conecta las nuevas senhales y slots
+    connect(&tiva,SIGNAL(commandADCReceived(uint16_t,uint16_t,uint16_t,uint16_t)),this,SLOT(procesaDatoADC(uint16_t,uint16_t,uint16_t,uint16_t)));
     connect(ui->ADCButton,SIGNAL(clicked(bool)),&tiva,SLOT(ADCSample()));
 
 }
@@ -295,48 +295,27 @@ void GUIPanel::LedsReceived(uint8_t a, uint8_t b, uint8_t c)
 }
 
 // Segunda parte
-
-void GUIPanel::on_SetTimerOn_clicked(bool checked)
-{
-    tiva.TurnOnTimer(checked);
-}
-
-// Slot que asociaremos a una señal que genera el objeto TIVA cuando recibe datos del ADC
-void GUIPanel::procesaDatoADC(PARAM_COMANDO_ADC x)
+//SEMANA2: Slot que asociaremos a una señal que genera el objeto TIVA cuando recibe datos del ADC
+void GUIPanel::procesaDatoADC(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint16_t chan4)
 {
     //Manda cada dato a su correspondiente display (pasandolos a voltios)
-    static int  j=0;
-    int i;
-    ui->lcdCh1->display(((double)x.channels[7].chan1)*3.3/4096.0);
-    ui->lcdCh2->display(((double)x.channels[7].chan2)*3.3/4096.0);
-    ui->lcdCh3->display(((double)x.channels[7].chan3)*3.3/4096.0);
-    ui->lcdCh4->display(((double)x.channels[7].chan4)*3.3/4096.0);
-
-    //Inicializacion de los valores básicos
-    for(i=0;i<8;i++){
-        yVal[0][i+j]=((double)x.channels[i].chan1)*3.3/4096.0;
-        yVal[1][i+j]=((double)x.channels[i].chan2)*3.3/4096.0;
-        yVal[2][i+j]=((double)x.channels[i].chan3)*3.3/4096.0;
-        yVal[3][i+j]=((double)x.channels[i].chan4)*3.3/4096.0;
-        xVal[i+j]=i+j;
-   }
-
-    j=j+8;
-    Channels[0]->setRawSamples(xVal,yVal[0],1024);
-    Channels[1]->setRawSamples(xVal,yVal[1],1024);
-    Channels[2]->setRawSamples(xVal,yVal[2],1024);
-    Channels[3]->setRawSamples(xVal,yVal[3],1024);
-    if (j>=1024) j=0;
-
-
-    ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
-
+    ui->lcdCh1->display(((double)chan1)*3.3/4096.0);
+    ui->lcdCh2->display(((double)chan2)*3.3/4096.0);
+    ui->lcdCh3->display(((double)chan3)*3.3/4096.0);
+    ui->lcdCh4->display(((double)chan4)*3.3/4096.0);
 }
 
 //SEMANA2: Slot asociado a la rosca "frecuencia"
 void GUIPanel::on_frecuencia_valueChanged(double value)
 {
-    //COMANDO_FREQ parametro;
-    tiva.ChangeFrecuency(value);
-
+    //Recalcula los valores de la grafica
+    for(int i=0;i<1024;i++){
+            //xVal[i]=i;
+        //Los valores "constantes" deberian definirse como etiquetas por "estética"
+            yVal[0][i]=3.3*(sin((double)i*2.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+            yVal[1][i]=3.3*(sin((double)i*4.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+            yVal[2][i]=3.3*(sin((double)i*8.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+            yVal[3][i]=3.3*(sin((double)i*16.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+    }
+    ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
 }

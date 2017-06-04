@@ -29,7 +29,7 @@
     <bool>false</bool>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="tabsClosable">
     <bool>false</bool>
@@ -210,24 +210,11 @@
     <attribute name="title">
      <string>Convertidores Analógicos</string>
     </attribute>
-    <widget class="QPushButton" name="SetTimerOn">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>100</y>
-       <width>141</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Activar Timer</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="ADCButton">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>180</y>
+       <x>40</x>
+       <y>30</y>
        <width>141</width>
        <height>61</height>
       </rect>
@@ -239,11 +226,67 @@
       <string>Leer valor ADC</string>
      </property>
     </widget>
+    <widget class="QLCDNumber" name="lcdCh2">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>30</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="smallDecimalPoint">
+      <bool>false</bool>
+     </property>
+     <property name="digitCount">
+      <number>5</number>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+     <property name="value" stdset="0">
+      <double>0.000000000000000</double>
+     </property>
+    </widget>
     <widget class="QLCDNumber" name="lcdCh1">
      <property name="geometry">
       <rect>
-       <x>770</x>
-       <y>100</y>
+       <x>800</x>
+       <y>30</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="smallDecimalPoint">
+      <bool>false</bool>
+     </property>
+     <property name="digitCount">
+      <number>5</number>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+     <property name="value" stdset="0">
+      <double>0.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="lcdCh3">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>30</y>
        <width>171</width>
        <height>61</height>
       </rect>
@@ -271,7 +314,7 @@
      <property name="geometry">
       <rect>
        <x>230</x>
-       <y>100</y>
+       <y>30</y>
        <width>171</width>
        <height>61</height>
       </rect>
@@ -293,146 +336,6 @@
      </property>
      <property name="value" stdset="0">
       <double>0.000000000000000</double>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="lcdCh3">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>100</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="smallDecimalPoint">
-      <bool>false</bool>
-     </property>
-     <property name="digitCount">
-      <number>5</number>
-     </property>
-     <property name="segmentStyle">
-      <enum>QLCDNumber::Flat</enum>
-     </property>
-     <property name="value" stdset="0">
-      <double>0.000000000000000</double>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="lcdCh2">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>100</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="smallDecimalPoint">
-      <bool>false</bool>
-     </property>
-     <property name="digitCount">
-      <number>5</number>
-     </property>
-     <property name="segmentStyle">
-      <enum>QLCDNumber::Flat</enum>
-     </property>
-     <property name="value" stdset="0">
-      <double>0.000000000000000</double>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lcdCh4text">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>180</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>PORT 3</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lcdCh3text">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>180</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>PORT 2</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lcdCh2text">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>180</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>PORT 1</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lcdCh1text">
-     <property name="geometry">
-      <rect>
-       <x>770</x>
-       <y>180</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>PORT 0</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -443,22 +346,25 @@
     <widget class="QwtKnob" name="frecuencia">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>220</y>
-       <width>181</width>
+       <x>0</x>
+       <y>230</y>
+       <width>121</width>
        <height>151</height>
       </rect>
      </property>
+     <property name="lowerBound">
+      <double>0.000000000000000</double>
+     </property>
      <property name="upperBound">
-      <double>5.000000000000000</double>
+      <double>25.000000000000000</double>
      </property>
     </widget>
     <widget class="QwtPlot" name="Grafica">
      <property name="geometry">
       <rect>
-       <x>189</x>
+       <x>119</x>
        <y>20</y>
-       <width>811</width>
+       <width>881</width>
        <height>361</height>
       </rect>
      </property>
@@ -478,6 +384,9 @@
       <bool>true</bool>
      </property>
     </widget>
+    <zorder>frecuencia</zorder>
+    <zorder>Grafica</zorder>
+    <zorder>Grafica</zorder>
    </widget>
   </widget>
   <widget class="QLabel" name="statusLabel">
@@ -603,7 +512,6 @@
   <tabstop>Interrupts</tabstop>
   <tabstop>checkSWs</tabstop>
   <tabstop>pingButton</tabstop>
-  <tabstop>SetTimerOn</tabstop>
   <tabstop>ADCButton</tabstop>
  </tabstops>
  <resources/>
