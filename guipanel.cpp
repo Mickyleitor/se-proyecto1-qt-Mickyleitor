@@ -90,6 +90,12 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(&tiva,SIGNAL(commandADCReceived(uint16_t,uint16_t,uint16_t,uint16_t)),this,SLOT(procesaDatoADC(uint16_t,uint16_t,uint16_t,uint16_t)));
     connect(ui->ADCButton,SIGNAL(clicked(bool)),&tiva,SLOT(ADCSample()));
 
+    // Alarmas personalizadas
+    connect(ui->triggerlevel1,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    connect(ui->triggerlevel2,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    connect(ui->triggerlevel3,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    connect(ui->triggerlevel4,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+
     //CAMBIO!!!: Inicializa la ventana
     ventanaPopUp.setIcon(QMessageBox::Information);
     ventanaPopUp.setText(tr("Status: RESPUESTA A PING RECIBIDA"));
@@ -205,6 +211,15 @@ void GUIPanel::cambiaLEDs(void)
 {
     //Invoca al metido LEDsGpioTiva para enviar la orden a la TIVA
     tiva.LEDsGpioTiva(ui->rojo->isChecked(),ui->verde->isChecked(),ui->azul->isChecked());
+}
+
+void GUIPanel::ChangedTriggerLevel(){
+    ui->lcdtriggerlevel1->display((double)(ui->triggerlevel1->value())*0.033);
+    ui->lcdtriggerlevel2->display((double)(ui->triggerlevel2->value())*0.033);
+    ui->lcdtriggerlevel3->display((double)(ui->triggerlevel3->value())*0.033);
+    ui->lcdtriggerlevel4->display((double)(ui->triggerlevel4->value())*0.033);
+
+    // PASAR MASCARA A TIVA PARA QUE LA TIVA SE ENCARGA DE PROGRAMAR LAS ALARMAS
 }
 
 //Slots Asociado al boton que limpia los mensajes del interfaz

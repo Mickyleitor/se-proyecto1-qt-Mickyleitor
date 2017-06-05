@@ -42,6 +42,8 @@ private slots:
     void on_colorWheel_colorChanged(const QColor &arg1);
     void on_Interrupts_clicked(bool checked);
 
+    void ChangedTriggerLevel();
+
     void tivaStatusChanged(int status,QString message);
     void pingResponseReceived(void);
     void CommandRejected(int16_t code);
@@ -63,6 +65,7 @@ private: // funciones privadas
     void processError(const QString &s);
     void activateRunButton();
     void cambiaLEDs();
+
 private:
     Ui::GUIPanel *ui;
     int transactionCount;    
