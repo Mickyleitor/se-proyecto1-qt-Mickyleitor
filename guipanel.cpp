@@ -169,7 +169,6 @@ void GUIPanel::tivaStatusChanged(int status,QString message)
     }
 }
 
-
 // SLOT asociada a pulsación del botón RUN
 void GUIPanel::on_runButton_clicked()
 {
@@ -349,8 +348,9 @@ void GUIPanel::procesaDatoADC(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint1
 }
 
 //SEMANA2: Slot asociado a la rosca "frecuencia"
-void GUIPanel::on_frecuencia_valueChanged(double value)
+void GUIPanel::on_frecuencia_sliderReleased()
 {
+    double value = ui->frecuencia->value();
     tiva.ChangeFrequency(value);
 
     //Recalcula los valores de la grafica
