@@ -29,7 +29,7 @@
     <bool>false</bool>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <property name="tabsClosable">
     <bool>false</bool>
@@ -42,7 +42,7 @@
    </property>
    <widget class="QWidget" name="Tarea1">
     <attribute name="title">
-     <string>LED y Pulsadores</string>
+     <string>LED / Pulsadores</string>
     </attribute>
     <widget class="QSplitter" name="splitter_2">
      <property name="enabled">
@@ -208,7 +208,7 @@
    </widget>
    <widget class="QWidget" name="Tarea2">
     <attribute name="title">
-     <string>Convertidores Analógicos</string>
+     <string>CAD / Alarmas</string>
     </attribute>
     <widget class="QPushButton" name="ADCButton">
      <property name="geometry">
@@ -355,9 +355,9 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>130</y>
+       <y>100</y>
        <width>951</width>
-       <height>231</height>
+       <height>271</height>
       </rect>
      </property>
      <property name="autoFillBackground">
@@ -375,13 +375,13 @@
      <property name="checkable">
       <bool>false</bool>
      </property>
-     <widget class="QLCDNumber" name="lcdtriggerlevel2">
+     <widget class="QLCDNumber" name="lcdtriggerlevelA1">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>70</y>
-        <width>171</width>
-        <height>61</height>
+        <x>550</x>
+        <y>90</y>
+        <width>141</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="font">
@@ -418,59 +418,16 @@
        <double>3.300000000000000</double>
       </property>
      </widget>
-     <widget class="QLCDNumber" name="lcdtriggerlevel1">
-      <property name="geometry">
-       <rect>
-        <x>760</x>
-        <y>70</y>
-        <width>171</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-        <underline>false</underline>
-        <kerning>true</kerning>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
-      </property>
-      <property name="smallDecimalPoint">
-       <bool>false</bool>
-      </property>
-      <property name="digitCount">
-       <number>5</number>
-      </property>
-      <property name="segmentStyle">
-       <enum>QLCDNumber::Flat</enum>
-      </property>
-      <property name="value" stdset="0">
-       <double>3.300000000000000</double>
-      </property>
-     </widget>
-     <widget class="QLCDNumber" name="lcdtriggerlevel4">
+     <widget class="QLCDNumber" name="lcdtriggerlevelA3">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>70</y>
-        <width>171</width>
-        <height>61</height>
+        <x>550</x>
+        <y>210</y>
+        <width>141</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -516,17 +473,23 @@
        <double>3.300000000000000</double>
       </property>
      </widget>
-     <widget class="QSlider" name="triggerlevel4">
+     <widget class="QSlider" name="triggerlevelA3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>40</y>
-        <width>171</width>
-        <height>16</height>
+        <x>710</x>
+        <y>210</y>
+        <width>231</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
@@ -553,13 +516,13 @@
        <enum>QSlider::NoTicks</enum>
       </property>
      </widget>
-     <widget class="QLCDNumber" name="lcdtriggerlevel3">
+     <widget class="QLCDNumber" name="lcdtriggerlevelA2">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>70</y>
-        <width>171</width>
-        <height>61</height>
+        <x>550</x>
+        <y>150</y>
+        <width>141</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="font">
@@ -596,17 +559,23 @@
        <double>3.300000000000000</double>
       </property>
      </widget>
-     <widget class="QSlider" name="triggerlevel2">
+     <widget class="QSlider" name="triggerlevelA1">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>40</y>
-        <width>171</width>
-        <height>16</height>
+        <x>710</x>
+        <y>89</y>
+        <width>231</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
       </property>
       <property name="maximum">
        <number>100</number>
@@ -621,17 +590,23 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QSlider" name="triggerlevel3">
+     <widget class="QSlider" name="triggerlevelA2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>40</y>
-        <width>171</width>
-        <height>16</height>
+        <x>710</x>
+        <y>150</y>
+        <width>231</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
       </property>
       <property name="maximum">
        <number>100</number>
@@ -649,17 +624,20 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QSlider" name="triggerlevel1">
+     <widget class="QSlider" name="triggerlevelA0">
       <property name="geometry">
        <rect>
-        <x>760</x>
-        <y>40</y>
-        <width>171</width>
-        <height>16</height>
+        <x>710</x>
+        <y>29</y>
+        <width>231</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
       </property>
       <property name="maximum">
        <number>100</number>
@@ -674,77 +652,440 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="lcdlabel4">
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmA0">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>140</y>
-        <width>171</width>
-        <height>16</height>
+        <x>500</x>
+        <y>40</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmA0_check">
+      <property name="geometry">
+       <rect>
+        <x>465</x>
+        <y>30</y>
+        <width>21</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Umbral activación AIN3</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="lcdlabel3">
+     <widget class="QCheckBox" name="AlarmA1_check">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>140</y>
-        <width>171</width>
-        <height>16</height>
+        <x>465</x>
+        <y>90</y>
+        <width>21</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Umbral activación AIN2</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="lcdlabel2">
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmA1">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>140</y>
-        <width>171</width>
-        <height>16</height>
+        <x>500</x>
+        <y>100</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmA2_check">
+      <property name="geometry">
+       <rect>
+        <x>465</x>
+        <y>150</y>
+        <width>21</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Umbral activación AIN1</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="lcdlabel1">
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmA2">
       <property name="geometry">
        <rect>
-        <x>760</x>
-        <y>140</y>
-        <width>171</width>
-        <height>16</height>
+        <x>500</x>
+        <y>160</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmA3_check">
+      <property name="geometry">
+       <rect>
+        <x>465</x>
+        <y>210</y>
+        <width>21</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Umbral activación AIN0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string/>
       </property>
      </widget>
-     <widget class="Led" name="AlarmGeneral">
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmA3">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>220</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdtriggerlevelA0">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>30</y>
+        <width>141</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+        <underline>false</underline>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="smallDecimalPoint">
+       <bool>false</bool>
+      </property>
+      <property name="digitCount">
+       <number>5</number>
+      </property>
+      <property name="segmentStyle">
+       <enum>QLCDNumber::Flat</enum>
+      </property>
+      <property name="value" stdset="0">
+       <double>3.300000000000000</double>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_A0">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>30</y>
+        <width>41</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>AI0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_A1">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>90</y>
+        <width>41</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>AI1</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_A2">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>150</y>
+        <width>41</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>AI2</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_A3">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>210</y>
+        <width>41</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>AI3</string>
+      </property>
+     </widget>
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmP1">
+      <property name="geometry">
+       <rect>
+        <x>305</x>
+        <y>100</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmP3_check">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>210</y>
+        <width>21</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PE0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_P0">
+      <property name="geometry">
+       <rect>
+        <x>205</x>
+        <y>30</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PE0</string>
+      </property>
+     </widget>
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmP0">
+      <property name="geometry">
+       <rect>
+        <x>305</x>
+        <y>40</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmP2_check">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>150</y>
+        <width>21</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PE0</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmP0_check">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>30</y>
+        <width>21</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PE0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_P3">
+      <property name="geometry">
+       <rect>
+        <x>205</x>
+        <y>210</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PE3</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AlarmP1_check">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>90</y>
+        <width>21</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PE0</string>
+      </property>
+     </widget>
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmP3">
+      <property name="geometry">
+       <rect>
+        <x>305</x>
+        <y>220</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_P2">
+      <property name="geometry">
+       <rect>
+        <x>205</x>
+        <y>150</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PE2</string>
+      </property>
+     </widget>
+     <widget class="color_widgets::ColorPreview" name="lcdAlarmP2">
+      <property name="geometry">
+       <rect>
+        <x>305</x>
+        <y>160</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_P1">
+      <property name="geometry">
+       <rect>
+        <x>205</x>
+        <y>90</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PE1</string>
+      </property>
+     </widget>
+     <widget class="Led" name="lcdAlarm">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>40</y>
-        <width>131</width>
-        <height>91</height>
+        <y>80</y>
+        <width>151</width>
+        <height>111</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -753,9 +1094,6 @@
       <property name="whatsThis">
        <string>Led indicator</string>
       </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
       <property name="color">
        <color>
         <red>0</red>
@@ -764,111 +1102,61 @@
        </color>
       </property>
      </widget>
-     <widget class="color_widgets::ColorPreview" name="Alarm4">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>180</y>
-        <width>171</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="color">
-       <color>
-        <red>0</red>
-        <green>255</green>
-        <blue>0</blue>
-       </color>
-      </property>
-     </widget>
-     <widget class="color_widgets::ColorPreview" name="Alarm3">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>180</y>
-        <width>171</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="color">
-       <color>
-        <red>0</red>
-        <green>255</green>
-        <blue>0</blue>
-       </color>
-      </property>
-     </widget>
-     <widget class="color_widgets::ColorPreview" name="Alarm2">
-      <property name="geometry">
-       <rect>
-        <x>570</x>
-        <y>180</y>
-        <width>171</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="color">
-       <color>
-        <red>0</red>
-        <green>255</green>
-        <blue>0</blue>
-       </color>
-      </property>
-     </widget>
-     <widget class="color_widgets::ColorPreview" name="Alarm1">
-      <property name="geometry">
-       <rect>
-        <x>760</x>
-        <y>180</y>
-        <width>171</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="color">
-       <color>
-        <red>0</red>
-        <green>255</green>
-        <blue>0</blue>
-       </color>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lcdlabel4_2">
+     <widget class="QLabel" name="label_Alarm">
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>140</y>
-        <width>151</width>
-        <height>16</height>
+        <y>200</y>
+        <width>171</width>
+        <height>31</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Alarma general</string>
+       <string>ESTADO ALARMA</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="lcdlabel4_3">
+     <widget class="Led" name="lcdAlarmDummy">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>180</y>
-        <width>171</width>
+        <x>90</x>
+        <y>40</y>
+        <width>31</width>
         <height>21</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Alarmas activadas</string>
+      <property name="visible">
+       <bool>false</bool>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+      <property name="toolTip">
+       <string>Color Led component</string>
+      </property>
+      <property name="whatsThis">
+       <string>Led indicator</string>
+      </property>
+      <property name="color">
+       <color>
+        <red>0</red>
+        <green>255</green>
+        <blue>0</blue>
+       </color>
       </property>
      </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="GUIGrafica">
     <attribute name="title">
-     <string>Grafica</string>
+     <string>Osciloscopio</string>
     </attribute>
     <widget class="QwtKnob" name="frecuencia">
      <property name="geometry">
@@ -1044,5 +1332,198 @@
   <tabstop>ADCButton</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>AlarmA0_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>triggerlevelA0</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>519</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>856</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA1_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>triggerlevelA1</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>519</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>814</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA2_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>triggerlevelA2</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>806</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA3_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>triggerlevelA3</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>512</x>
+     <y>448</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>895</x>
+     <y>455</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmP0_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>153</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmP1_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>319</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>142</x>
+     <y>270</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmP2_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>391</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>152</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmP3_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>140</x>
+     <y>273</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA0_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>512</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA1_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>512</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA2_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>510</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>146</x>
+     <y>271</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AlarmA3_check</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lcdAlarmDummy</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>519</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -55,7 +55,8 @@ typedef enum {
     // Semana 2
     COMANDO_ADC,
     COMANDO_FREQ,
-    COMANDO_TIMER
+    COMANDO_TIMER,
+    COMANDO_FLAGALARM
 } commandTypes;
 
 //Codigos de Error de protocolo
@@ -134,6 +135,20 @@ typedef struct
 {
     double frequency;
 } PACKED PARAM_COMANDO_FREQ; //SEMANA2
+
+typedef union{
+    struct {
+                uint8_t PE0:1;
+                uint8_t PE1:1;
+                uint8_t PE2:1;
+                uint8_t PE3:1;
+                uint8_t AI0:1;
+                uint8_t AI1:1;
+                uint8_t AI2:1;
+                uint8_t AI3:1;
+    } PACKED flags;
+    uint8_t ui8Valor;
+} PACKED PARAM_COMANDO_FLAGALARM;
 
 #pragma pack()	//...Pero solo para los comandos que voy a intercambiar, no para el resto.
 

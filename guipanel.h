@@ -8,6 +8,10 @@
 #include <qwt_plot_grid.h>
 #include <QMessageBox>
 
+// Establecemos un nivel de alimentación
+// Por si en vez de conectar TIVA, conectamos otro con Vcc 5V
+#define VCC_LEVEL 3.3
+
 namespace Ui {
 class GUIPanel;
 }
@@ -43,6 +47,7 @@ private slots:
     void on_Interrupts_clicked(bool checked);
 
     void ChangedTriggerLevel();
+    void ChangeAlarmEventFlags();
 
     void tivaStatusChanged(int status,QString message);
     void pingResponseReceived(void);

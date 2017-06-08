@@ -9,6 +9,8 @@
 #include<stdint.h>      // Cabecera para usar tipos de enteros con tamaño
 #include<stdbool.h>     // Cabecera para usar booleanos
 
+
+
 extern "C" {
 #include "protocol.h"    // Cabecera de funciones de gestión de tramas; se indica que está en C, ya que QTs
 // se integra en C++, y el C puede dar problemas si no se indica.
@@ -43,7 +45,7 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     ui->Grafica->setAxisTitle(QwtPlot::xBottom, "Tiempo"); // Etiqueta eje X de coordenadas
     ui->Grafica->setAxisTitle(QwtPlot::yLeft, "Valor");    // Etiqueta eje Y de coordenadas
     //ui->Grafica->axisAutoScale(true); // Con Autoescala
-    ui->Grafica->setAxisScale(QwtPlot::yLeft, 0, 3.3); // Escala fija
+    ui->Grafica->setAxisScale(QwtPlot::yLeft, 0, VCC_LEVEL); // Escala fija
     ui->Grafica->setAxisScale(QwtPlot::xBottom,0,1024.0);
 
     // Formateo de la curva
@@ -55,10 +57,10 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     //Inicializacion de los valores básicos
     for(int i=0;i<1024;i++){
             xVal[i]=i;
-            yVal[0][i]=3.3*(sin((double)i*2.0*3.14159/1024.0)+1.0)/2.0;
-            yVal[1][i]=3.3*(sin((double)i*4.0*3.14159/1024.0)+1.0)/2.0;
-            yVal[2][i]=3.3*(sin((double)i*8.0*3.14159/1024.0)+1.0)/2.0;
-            yVal[3][i]=3.3*(sin((double)i*16.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[0][i]=VCC_LEVEL*(sin((double)i*2.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[1][i]=VCC_LEVEL*(sin((double)i*4.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[2][i]=VCC_LEVEL*(sin((double)i*8.0*3.14159/1024.0)+1.0)/2.0;
+            yVal[3][i]=VCC_LEVEL*(sin((double)i*16.0*3.14159/1024.0)+1.0)/2.0;
     }
     Channels[0]->setRawSamples(xVal,yVal[0],1024);
     Channels[1]->setRawSamples(xVal,yVal[1],1024);
@@ -90,11 +92,19 @@ GUIPanel::GUIPanel(QWidget *parent) :  // Constructor de la clase
     connect(&tiva,SIGNAL(commandADCReceived(uint16_t,uint16_t,uint16_t,uint16_t)),this,SLOT(procesaDatoADC(uint16_t,uint16_t,uint16_t,uint16_t)));
     connect(ui->ADCButton,SIGNAL(clicked(bool)),&tiva,SLOT(ADCSample()));
 
-    // Alarmas personalizadas
-    connect(ui->triggerlevel1,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
-    connect(ui->triggerlevel2,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
-    connect(ui->triggerlevel3,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
-    connect(ui->triggerlevel4,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    // Alarmas personalizadas LCD
+    connect(ui->triggerlevelA0,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    connect(ui->triggerlevelA1,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    connect(ui->triggerlevelA2,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+    connect(ui->triggerlevelA3,SIGNAL(sliderReleased()),this,SLOT(ChangedTriggerLevel()));
+
+    connect(ui->lcdAlarmDummy,SIGNAL(checkChanged(bool)),this,SLOT(ChangeAlarmEventFlags()));
+
+    // Inicialización LCDAlarmas
+    ui->lcdtriggerlevelA0->display((double)VCC_LEVEL);
+    ui->lcdtriggerlevelA1->display((double)VCC_LEVEL);
+    ui->lcdtriggerlevelA2->display((double)VCC_LEVEL);
+    ui->lcdtriggerlevelA3->display((double)VCC_LEVEL);
 
     //CAMBIO!!!: Inicializa la ventana
     ventanaPopUp.setIcon(QMessageBox::Information);
@@ -213,10 +223,11 @@ void GUIPanel::cambiaLEDs(void)
 }
 
 void GUIPanel::ChangedTriggerLevel(){
-    ui->lcdtriggerlevel1->display((double)(ui->triggerlevel1->value())*0.033);
-    ui->lcdtriggerlevel2->display((double)(ui->triggerlevel2->value())*0.033);
-    ui->lcdtriggerlevel3->display((double)(ui->triggerlevel3->value())*0.033);
-    ui->lcdtriggerlevel4->display((double)(ui->triggerlevel4->value())*0.033);
+    ui->lcdtriggerlevelA0->display((double)(ui->triggerlevelA0->value())*(VCC_LEVEL/100));
+    ui->lcdtriggerlevelA1->display((double)(ui->triggerlevelA1->value())*(VCC_LEVEL/100));
+    ui->lcdtriggerlevelA2->display((double)(ui->triggerlevelA2->value())*(VCC_LEVEL/100));
+    ui->lcdtriggerlevelA3->display((double)(ui->triggerlevelA3->value())*(VCC_LEVEL/100));
+
 
     // PASAR MASCARA A TIVA PARA QUE LA TIVA SE ENCARGA DE PROGRAMAR LAS ALARMAS
 }
@@ -236,8 +247,8 @@ void GUIPanel::on_pushButton_clicked()
 void GUIPanel::pingResponseReceived()
 {
     //CAMBIO: La ventana PoP Up ahora esta declarada como componente de la clase GUIPANEL. Se configura en el constructor
-    // Ventana popUP para el caso de comando PING; no te deja definirla en un "caso"
-    ventanaPopUp.setStyleSheet("background-color: lightgrey");
+    // Ventana popUP para el caso de comando PING; no te 2deja definirla en un "caso"
+    ventanaPopUp.setStyleSheet("background-color: lightg0rey");
     ventanaPopUp.setModal(true); //CAMBIO: Se sustituye la llamada a exec(...) por estas dos.
     ventanaPopUp.show();
 }
@@ -320,29 +331,27 @@ void GUIPanel::LedsReceived(uint8_t a, uint8_t b, uint8_t c)
 void GUIPanel::procesaDatoADC(uint16_t chan1,uint16_t chan2,uint16_t chan3,uint16_t chan4)
 {
     //Manda cada dato a su correspondiente display (pasandolos a voltios)
-    ui->lcdCh1->display(((double)chan1)*3.3/4096.0);
-    ui->lcdCh2->display(((double)chan2)*3.3/4096.0);
-    ui->lcdCh3->display(((double)chan3)*3.3/4096.0);
-    ui->lcdCh4->display(((double)chan4)*3.3/4096.0);
+    ui->lcdCh1->display(((double)chan1)*VCC_LEVEL/4096.0);
+    ui->lcdCh2->display(((double)chan2)*VCC_LEVEL/4096.0);
+    ui->lcdCh3->display(((double)chan3)*VCC_LEVEL/4096.0);
+    ui->lcdCh4->display(((double)chan4)*VCC_LEVEL/4096.0);
 
     int i;
     static int  j=0;
     //Inicializacion de los valores básicos
     for(i=0;i<8;i++){
-        yVal[0][i+j]=((double)chan1)*3.3/4096.0;
-        yVal[1][i+j]=((double)chan2)*3.3/4096.0;
-        yVal[2][i+j]=((double)chan3)*3.3/4096.0;
-        yVal[3][i+j]=((double)chan4)*3.3/4096.0;
+        yVal[0][i+j]=((double)chan1)*VCC_LEVEL/4096.0;
+        yVal[1][i+j]=((double)chan2)*VCC_LEVEL/4096.0;
+        yVal[2][i+j]=((double)chan3)*VCC_LEVEL/4096.0;
+        yVal[3][i+j]=((double)chan4)*VCC_LEVEL/4096.0;
         xVal[i+j]=i+j;
    }
-
     j=j+8;
     Channels[0]->setRawSamples(xVal,yVal[0],1024);
     Channels[1]->setRawSamples(xVal,yVal[1],1024);
     Channels[2]->setRawSamples(xVal,yVal[2],1024);
     Channels[3]->setRawSamples(xVal,yVal[3],1024);
     if (j>=1024) j=0;
-
 
     ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
 }
@@ -357,10 +366,10 @@ void GUIPanel::on_frecuencia_sliderReleased()
     for(int i=0;i<1024;i++){
             //xVal[i]=i;
         //Los valores "constantes" deberian definirse como etiquetas por "estética"
-            yVal[0][i]=3.3*(sin((double)i*2.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
-            yVal[1][i]=3.3*(sin((double)i*4.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
-            yVal[2][i]=3.3*(sin((double)i*8.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
-            yVal[3][i]=3.3*(sin((double)i*16.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+        yVal[0][i]=VCC_LEVEL*(sin((double)i*2.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+        yVal[1][i]=VCC_LEVEL*(sin((double)i*4.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+        yVal[2][i]=VCC_LEVEL*(sin((double)i*8.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
+        yVal[3][i]=VCC_LEVEL*(sin((double)i*16.0*(value+1.0)*3.14159/1024.0)+1.0)/2.0;
     }
     ui->Grafica->replot(); //Refresca la grafica una vez actualizados los valores
 }
@@ -368,4 +377,22 @@ void GUIPanel::on_frecuencia_sliderReleased()
 void GUIPanel::on_TimerADC_clicked(bool checked)
 {
     tiva.SetTimerADC(checked);
+}
+
+void GUIPanel::ChangeAlarmEventFlags(){
+    PARAM_COMANDO_FLAGALARM FlagsAlarm;
+    if(ui->AlarmP0_check->isChecked()) FlagsAlarm.flags.PE0=1;
+    if(ui->AlarmP1_check->isChecked()) FlagsAlarm.flags.PE1=1;
+    if(ui->AlarmP2_check->isChecked()) FlagsAlarm.flags.PE2=1;
+    if(ui->AlarmP3_check->isChecked()) FlagsAlarm.flags.PE3=1;
+    if(ui->AlarmA0_check->isChecked()) FlagsAlarm.flags.AI0=1;
+    if(ui->AlarmA1_check->isChecked()) FlagsAlarm.flags.AI1=1;
+    if(ui->AlarmA2_check->isChecked()) FlagsAlarm.flags.AI2=1;
+    if(ui->AlarmA3_check->isChecked()) FlagsAlarm.flags.AI3=1;
+    // debug
+    ui->statusLabel->setNum((double)FlagsAlarm.ui8Valor);
+
+    // Inicializar temporizador de 10 segundos
+
+    tiva.setFlagAlarm(FlagsAlarm);
 }

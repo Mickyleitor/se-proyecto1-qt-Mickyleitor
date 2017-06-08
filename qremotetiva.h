@@ -65,6 +65,7 @@ public slots:
     void ADCSample(void);
     void SetTimerADC(bool estado);
     void ChangeFrequency(double value);
+    void setFlagAlarm(PARAM_COMANDO_FLAGALARM FlagsAlarm);
 private slots:
     void readRequest(); //Este Slot se conecta a la señal readyRead(..) del puerto serie. Se encarga de procesar y decodificar los mensajes que llegan de la TIVA y
                         //generar señales para algunos de ellos.

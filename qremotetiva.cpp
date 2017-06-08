@@ -386,3 +386,14 @@ void QRemoteTIVA::ChangeFrequency(double value)
         if (size>0) serial.write((char *)pui8Frame,size);
     }
 }
+void QRemoteTIVA::setFlagAlarm(PARAM_COMANDO_FLAGALARM FlagsAlarm){
+    PARAM_COMANDO_FLAGALARM parametro;
+    uint8_t pui8Frame[MAX_FRAME_SIZE];
+    int size;
+    if(connected)
+    {
+        parametro=FlagsAlarm;
+        size=create_frame((uint8_t *)pui8Frame, COMANDO_FLAGALARM, &parametro, sizeof(parametro), MAX_FRAME_SIZE);
+        if (size>0) serial.write((char *)pui8Frame,size);
+    }
+}
